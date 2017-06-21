@@ -36,3 +36,24 @@ public:
     	return res;
     }
 };
+/* space O(1) solution, use the featuer of BST
+
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if(root == null || p == null) {
+            return null;
+        }
+        TreeNode successor = null;
+        while(root != null) {
+            if(p.val < root.val) {
+                successor = root;
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+        
+        return successor;
+    }
+}
+ */
