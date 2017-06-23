@@ -24,7 +24,7 @@ public:
 				tem = NULL;
 			}
 			else {
-					if (need_to_delete) {
+				if (need_to_delete) {
 					ListNode *tem   = duplicate->next;
 					duplicate->next = iter->next;
 					duplicate->val  = iter->val;
@@ -40,10 +40,18 @@ public:
 			}
     	}
 		if (need_to_delete) {
-			ListNode *tem = duplicate;
-			duplicate     = NULL;
-			delete tem;
-			tem = NULL;
+			ListNode *dummy = head;
+			if (!head->next) { delete head; head = NULL; }
+			else {
+				ListNode *father = NULL;
+				while (dummy->next) {
+					father = dummy;
+					dummy = dummy->next;
+				}
+				father->next = NULL;
+				delete dummy;
+				dummy = NULL;
+			}
 		}
     	return head;
     }
