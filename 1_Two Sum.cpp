@@ -1,22 +1,24 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-	    unordered_map<int, int> mymap;
-	    vector<int> res;
-	    for (int i = 0; i < nums.size(); i ++) 
-	    	mymap[nums[i]] = i;
-     	for (auto it = mymap.begin(); it != mymap.end(); ++it )
-            cout << " " << it->first << ":" << it->second;
-	    for (int i = 0; i < nums.size(); i ++) {
-	    	int tem = target - nums[i];
-	    	if (mymap.find(tem) != mymap.end() && mymap.at(tem) != i) {
-	    		res.push_back(i);
-	    		res.push_back(mymap[tem]);
-	    		return res;
-	    	}
-	    }
-	    res.push_back(-1);
-	    res.push_back(-1);
-	    return res;
+        vector<int> res;
+        vector<pair<int, int>> mnums;
+        for (int i = 0; i < nums.size(); ++ i)
+        	mnums.push_back(make_pair(nums[i], i));
+        
+
+        sort(mnums.begin(), mnums.end());
+        int left = 0, right = nums.size()-1;
+        while (left < right) {
+        	int sum = mnums[left].first + mnums[right].first;
+        	if (sum == target) {
+        		res.push_back(mnums[left].second);
+        		res.push_back(mnums[right].second);
+        		return res;		
+        	}
+        	else if (sum > target) right --;
+        	else left ++;
+        }
+        return res;
     }
 };
