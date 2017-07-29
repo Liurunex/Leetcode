@@ -7,7 +7,7 @@ public:
     
     /** Push element x to the back of queue. */
     void push(int x) {
-        if (!mystack.empty()) {
+        if (mystack.empty()) {
             mystack.push(x);
             return;
         }
