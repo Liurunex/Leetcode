@@ -32,6 +32,15 @@ class Solution {
 public:
 	void connect(TreeLinkNode *root) {
 		if (!root) return;
-		
+		while (root->left) {
+			TreeLinkNode *rowstart = root;
+			while (rowstart) {
+				rowstart->left->next = rowstart->right;
+				if (rowstart->next)
+					rowstart->right->next = rowstart->next->left;
+				rowstart = rowstart->next;
+			}
+			root = root->left;
+		}
 	}
 };
