@@ -1,6 +1,6 @@
 class Solution {
 private:
-	bool comparator (pair<char, int> i, pair<char, int> j) { return (i.second >= j.second); }
+	static bool comparator (int i, int j) { return (i >= j); }
 
 public:
 
@@ -11,24 +11,36 @@ public:
 				diction[tasks[i]] ++;
 			else diction[tasks[i]] = 1;
 		}
-		sort(diction.begin(), diction.end(), comparator);
-
-		int res = 0, counter = 0;
-		queue<int> window;
 		
-		while (1) {
-			auto iter = diction.begin();
-			int round = iter->second;
-			auto iter_end = iter + n;
-			while (iter != iter_end) {
-				iter->second -= round;
-				if (iter->second < 0) {
-					auto rinforce = iter_end;
-					diction.erase(iter);
+		vector<int> sorteddic;
+		for (auto iter = diction.begin(); iter != diction.end(); iter ++)
+			sorteddic.push_back(iter->second);
+
+		int res = 0, skip = 0;
+		
+		while (!sorteddic.empty()) {
+			sort(sorteddic.begin(), sorteddic.end(), comparator);
+			auto iter = sorteddic.begin();
+			while (*iter > 0) {
+				auto i = iter;
+				for (int j = 0; j < n; ++ i, ++ j) {
+					
+					if (skip) { skip --; res ++; continue; }
+					if (i == sorteddic.end()) {
+						res ++;
+						skip = n - j;
+						continue;
+					}
+					auto cur = i;
+					*cur --;
+					res ++;
+					if (*cur == 0) {
+						sorteddic.erase(cur);
+						if (sorteddic.empty()) break;
+					}
 				}
-				iter ++;
 			}
 		}
-
+        return res;
 	}
 };
