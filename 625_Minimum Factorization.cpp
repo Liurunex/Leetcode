@@ -19,3 +19,4 @@ public:
 		helper(a, i-1);
 	}	
 };
+/* notice that you should consider the case wherer divisor appeared multiple time  */
