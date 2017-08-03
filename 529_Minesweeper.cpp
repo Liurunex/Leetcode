@@ -72,5 +72,5 @@ public:
 };
 
 /*
-notice you only need to check node == 'M' case, moreover, notice everytime in recursion you should first check whether you have go through the point
+notice you only need to check node == 'M' case once at beginning; in addition  everytime in recursion you should first check whether you have already checked that point
  */
