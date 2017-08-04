@@ -16,8 +16,13 @@ public:
 				parentslist[newchild] = newparent;
 				continue;
 			} 
-			if (parentslist[child] == parent) continue;
-			if (parentslist[child] != -1) swap(child, parent);
+			if (parentslist[child] != -1) {
+				int newparent         = min(parentslist[child], parent);
+				int newchild          = max(parentslist[child], parent);
+				parentslist[child]    = newparent;
+				parentslist[newchild] = newparent;
+				continue;
+			}
 			if (parentslist[child] == parent) continue;
 			if (child != parent) {
 				parentslist[child] = parent;
