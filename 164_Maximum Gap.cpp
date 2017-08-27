@@ -7,9 +7,10 @@ public:
 			maxnum = max(maxnum, nums[i]);
 			minnum = min(minnum, nums[i]);
 		}
-		//int bucket_size = (maxnum - minnum) / (nums.size()-1);
+	
 		int bucket_size = (maxnum - minnum) / nums.size() + 1;
-		//int bucket_numb = (maxnum - minnum) / bucket_size;
+		//int bucket_size = (maxnum - minnum) / (nums.size()-1);
+		//if (!bucket_size) bucket_size = 1;
 		int bucket_numb = (maxnum - minnum) / bucket_size + 1;
 		
 		vector<pair<int, int>> bucket (bucket_numb, make_pair(-1, -1));
