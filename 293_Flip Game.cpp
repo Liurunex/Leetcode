@@ -9,3 +9,8 @@ public:
 		return res;
 	}
 };
+
+
+/*
+ * note the question is only to flip ++ into --
+ *
