@@ -1,5 +1,38 @@
 class Solution {
 public:
+	int numIslands(vector<vector<char>>& grid) {
+		if (!grid.size()) return 0;
+		int res = 0;
+		for (int i = 0; i < grid.size(); ++ i) {
+			for (int j = 0; j < grid[0].size(); ++ j) {
+				if (grid[i][j] == '1') {
+					res ++;
+					dfshelper(grid, {i, j});
+				}
+			}
+		}
+		return res;
+	}
+
+	void dfshelper(vector<vector<char>>& grid, pair<int, int> index) {
+		int i = index.first;
+		int j = index.second;
+		grid[i][j] = '0';
+		if (i-1 >= 0 && grid[i-1][j] == '1')
+			dfshelper(grid, {i-1, j});
+		if (j-1 >= 0 && grid[i][j-1] == '1')
+			dfshelper(grid, {i, j-1});
+		if (i+1 < grid.size() && grid[i+1][j] == '1')
+			dfshelper(grid, {i+1, j});
+		if (j+1 < grid[0].size() && grid[i][j+1] == '1')
+			dfshelper(grid, {i, j+1});
+	}
+};
+
+/* the idea: DFS is better, check a pointer, set it to 0, then keep look around and
+ * do the recursive call unitl all its current around is 0 */
+class Solution {
+public:
 	struct newpoint {
 		char val;
 		int hasParent = 0;

@@ -12,6 +12,7 @@ public:
 /* the idea is to append first n-k elements to the end the whole
  * array, and delete the first element simultanesouly again and again,
  * simialar to the reverse method, but easily for implement
+ * NOTICE: need k%n first
  */
 
 
