@@ -1,32 +1,31 @@
 class Solution {
 public:
-	int repeatedStringMatch(string A, string B) {
-		if (!B.length() || !A.length()) return 0;
-		int res = INT_MAX;
-		for (int i = 0; i < A.length(); ++ i) {
-			if (A[i] == B[0])
-				checkif(A, B, res, i);
+	double knightProbability(int N, int K, int r, int c) {
+		if (!K) return 1;
+		vector<pair<int, int>> action = {{-2,1}, {-2,-1}, {-1,2},{-1,-2}, {1,2}, {1,-2}, {2,1}, {2,-1}};
+		double onboard = 0, offboard = 0;
+		for (int i = 0; i < action.size(); ++ i) {
+			goknight_bfs(N, K-1, r+action[i].first, c+action[i].second, 
+				onboard, offboard, action);
 		}
-		return res == INT_MAX ? -1:res;
+		cout << onboard <<  " off: " << pow(8,K) << endl;
+		return (double)onboard/pow(8,K);
 	}
 
-	void checkif(string& A, string& B, int& res, int start) {
-		int curres = 1, b_index = 0;  
-		while (b_index < B.length()) {
-			if (A[start ++] == B[b_index ++]) {
-				if (b_index >= B.length()) break;
-				if (start >= A.length()) {
-					start = 0;
-					curres ++;
-				}
-				continue;
-			}
+	void goknight_bfs(int& N, int step, int r, int c, 
+		double& onboard, double& offboard, vector<pair<int, int>>& action) {
+		if (r >= N || r < 0 || c >= N || c < 0) {
+			offboard += 1;
 			return;
 		}
-		res = min(res, curres);
+		if (!step) {
+			onboard += 1;
+			return;
+		}
+
+		for (int i = 0; i < action.size(); ++ i) {
+			goknight_bfs(N, step-1, r+action[i].first, c+action[i].second, 
+				onboard, offboard, action);
+		}
 	}
 };
-/* the idea: brute force idea, we check A until find A[i] == B[0], then call
- * a fucntion to caculate the number of A's we need to construct B, do this for
- * each cases A[i] == B[0], and update the res each time
- */
