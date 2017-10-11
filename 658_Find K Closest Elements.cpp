@@ -1,6 +1,44 @@
 class Solution {
 public:
 	vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+		int lbindex = bst_lower_bound(arr, x);
+		int left = lbindex-1, right = lbindex;
+		while (k --) {
+			if (left < 0 || (right < arr.size() && abs(arr[left]-x) > abs(arr[right]-x)))
+				right ++;
+			else left --;
+		}
+		return vector<int> (arr.begin()+left+1, arr.begin()+right);
+	}
+
+	int bst_lower_bound(vector<int>& arr, int x) {
+		int left = 0, right = arr.size()-1;
+		while (left <= right) {
+			int mid = left + (right-left)/2;
+			if (arr[mid] == x) {
+				while (arr[mid] == x) {
+					mid --;
+					if (mid < 0) return 0;
+				}
+				return mid+1;
+			}
+			else if (arr[mid] > x) right = mid-1;
+			else left = mid+1; 
+		}
+		return left;
+	}
+};
+/* the idea: we are going to find the closet value to target, then we 
+ * start at this point, using two pointers to compare left and right
+ * side and keep this process unitl k == 0;
+ * the trick: how to find the lower_bound in array of the target,
+ * instead of using lower_bound built_in fucntion, we can use Binary
+ * Search, NOTICE that once we find the target, we must loop for back
+ * to find the first target!!!
+ */
+class Solution {
+public:
+	vector<int> findClosestElements(vector<int>& arr, int k, int x) {
 		int closet, pre, later, insert = x, find = 1;
 		vector<int> res;
 		for (int i = 0; i < arr.size(); ++ i) {
