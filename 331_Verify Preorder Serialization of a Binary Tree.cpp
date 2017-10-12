@@ -2,6 +2,34 @@
 class Solution {
 public:
 	bool isValidSerialization(string preorder) {
+		if (preorder.size() < 1 || (preorder.size() == 1 && preorder[0] == '#')) 
+			return true;
+		stringstream ss(preorder);
+		string tok;
+		int degree = 0;
+		int rootTime = 1;
+		while (getline(ss, tok, ',')) {
+			if (rootTime) {
+				if (tok == "#")
+					return false;
+				degree = 2;
+				rootTime = 0;
+				continue;
+			}
+			if (tok == "#")
+				degree --;
+			else degree ++;
+			
+            if (degree <= 0)
+				break;
+		}
+		return degree == 0 && !getline(ss, tok, ',');
+	}
+};
+
+class Solution {
+public:
+	bool isValidSerialization(string preorder) {
 	    if (preorder.size() < 1 || (preorder.size() == 1 && preorder[0] == '#')) return true;
 
 	    preorder += ',';
