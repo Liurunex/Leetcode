@@ -10,38 +10,45 @@
 class Solution {
 public:
 	string tree2str(TreeNode* t) {
-	    string res;
-		if (!t) return res;
-		stack<pair<TreeNode *, int>> myStack;
-		myStack.push(make_pair(t, 0));
-		while (!myStack.empty()) {
-			if (myStack.top().second == 1) {
-				res += "(";
-				myStack.pop();
-				continue;
-			}
-			if (myStack.top().second == 2) {
-				res += ")";
-				myStack.pop();
-				continue;
-			}
-			TreeNode* node = myStack.top().first;
-			myStack.pop();
-			res += to_string(node->val);
-			if (!node->right && !node->left)
-			    continue;
-			if (node->right) {
-			    myStack.push(make_pair(t, 2));
-			    myStack.push(make_pair(node->right, 0));
-			    myStack.push(make_pair(t, 1));
-			}
-			if (node->left) {
-			    myStack.push(make_pair(t, 2));
-			    myStack.push(make_pair(node->left, 0));
-			    myStack.push(make_pair(t, 1));
-			}
-			else res += "()";
-		}
+		string res;
+		helper(t, res);
 		return res;
 	}
+
+	TreeNode* helper(TreeNode* t, string& res) {
+		if (!t) return NULL;
+		res += to_string(t->val);
+		TreeNode* left = NULL;
+		TreeNode* right = NULL;
+		
+		res += "(";
+		left = helper(t->left, res);
+		res += ")(";
+		right = helper(t->right, res);
+		if (right)
+			res += ")";
+		else if (left)
+			res.pop_back();
+		else {
+			res.pop_back();
+			res.pop_back();
+			res.pop_back();
+		}
+		return t;
+	}
+};
+/* the idea: simply a dfs problem, what we need to consider is the cases: if both left and
+ * right children are null, then no parenthesis added, otherwise left always need
+ * parenthesis, but right is depending on if it's empty;
+ */
+class Solution{
+public:
+  string tree2str(TreeNode* t) {
+        if (t == NULL) return "";
+        string s = to_string(t->val);
+        if (t->left) s += '(' + tree2str(t->left) + ')';
+        else if (t->right) s += "()";
+        if (t->right) s += '(' + tree2str(t->right) + ')';
+        return s;
+    }
 };
