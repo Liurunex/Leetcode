@@ -1,4 +1,4 @@
-/* x^0 = x, x^x = 0*/
+/* x^0 = x, x^x = 0 and think about that a^b^a = a^a^b */
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
