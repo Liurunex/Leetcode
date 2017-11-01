@@ -1,4 +1,5 @@
 class Solution {
+
 public:
 	vector<int> diffWaysToCompute(string input) {
 		unordered_map<string, vector<int>> dict;
