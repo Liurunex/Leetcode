@@ -1,19 +1,19 @@
 class NumArray {
-private: vector<int> tnums;
+private:
+    vector<int> sums;
 public:
     NumArray(vector<int> nums) {
-    	if (nums.size() == 0) return;
-    	tnums.push_back(nums[0]);
-        for (int i = 1; i < nums.size(); i++) {
-        	tnums.push_back(0);
-        	tnums[i] += nums[i] + tnums[i-1];
+        int sum = 0;
+        sums.push_back(0);
+        for (int num:nums) {
+            sum += num;
+            sums.push_back(sum);
         }
     }
     
     int sumRange(int i, int j) {
-        if (i > 0)
-            return tnums[j] - tnums[i-1];
-        return tnums[j];
+        
+        return sums[j+1]-sums[i];
     }
 };
 
