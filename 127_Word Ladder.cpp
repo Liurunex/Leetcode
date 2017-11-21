@@ -2,7 +2,6 @@ class Solution {
 public:
 	int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
 		if (beginWord.size() != endWord.size()) return 0;
-		int shortest = INT_MAX;
 		unordered_set<string> wordSet (wordList.begin(), wordList.end());
 		queue<pair<string, int>> bfsqueue;
 		bfsqueue.push({beginWord, 1});
@@ -10,10 +9,8 @@ public:
 			pair<string, int> transfer = bfsqueue.front();
 			bfsqueue.pop();
 
-			if (transfer.first == endWord) {
-				shortest = min(shortest, transfer.second);
-				continue;
-			}
+			if (transfer.first == endWord)
+				return transfer.second;
 
 			for (int i = 0; i < transfer.first.size(); ++ i) {
 				char tem = transfer.first.at(i);
@@ -29,7 +26,7 @@ public:
 			}
 		}
 
-		return shortest == INT_MAX ? 0:shortest;
+		return 0;
 	}
 };
 /*the idea: using DFS is brute-force solution which cannot pass; the idea here we use is BFS
