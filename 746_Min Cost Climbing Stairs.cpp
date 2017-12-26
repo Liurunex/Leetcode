@@ -9,3 +9,7 @@ public:
 		return dp[cost.size()];
 	}
 };
+
+/* the idea: basically dp question, just increase the dp table
+size by 1
+*/

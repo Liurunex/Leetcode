@@ -12,3 +12,6 @@ public:
 		return letters[left] > target ? letters[left]:letters[0];
 	}
 };
+
+/* the idea: bascally a upper bound BST problem
+*/
