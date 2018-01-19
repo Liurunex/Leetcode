@@ -101,6 +101,66 @@ public:
 /* NOTICE: BE REALLY CAREFUL WHEN DEALING WITH DOUBLE LINKED LIST NODE UPDATE!!
  */
 
+/* more easy way by using built-in list */
+class LRUCache {
+private:
+	list<pair<int, int>> dlist;
+	unordered_map<int, list<pair<int, int>>::iterator> hashmap;
+	int cap = 0;
+
+public:
+	LRUCache(int capacity) {
+		cap = capacity;
+	}
+
+	int get(int key) {
+		if (!hashmap.count(key))
+			return -1;
+		Dlist* node = hashmap[key];
+		moveToTop(node);
+		return node->value;
+	}
+
+	void put(int key, int value) {
+		if (hashmap.count(key)) {
+			Dlist* node = hashmap[key];
+			node->value = value;
+			moveToTop(node);
+
+			return;
+		}
+
+		Dlist* node = new Dlist(key, value);
+		hashmap[key] = node;
+		if (head) {
+			node->next 	= head;
+			head->pre  	= node;
+			head 		= node;
+		}
+		else {
+			head = node;
+			tail = node;
+		}
+
+		if (hashmap.size() > cap) {
+			hashmap.erase(tail->key);
+			
+			Dlist* tem = tail;
+			if (tail == head) {
+				head = NULL;
+				tail = NULL;
+			}
+			else {
+				tail = tail->pre;
+				tail->next = NULL;
+			}
+
+			delete tem;
+			tem = NULL;
+		}
+	}
+};
+
 
 
 
