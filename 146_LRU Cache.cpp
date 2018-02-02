@@ -1,3 +1,39 @@
+/* more easy way by using built-in list */
+class LRUCache{
+public:
+    LRUCache(int capacity) {
+        cap = capacity;
+    }
+    
+    int get(int key) {
+        auto it = m.find(key);
+        if (it == m.end()) return -1;
+        int value = it->second->second;
+        l.erase(it->second);
+        l.push_front({key, value});
+        m[key] = l.begin();
+        return value;
+    }
+    
+    void put(int key, int value) {
+        auto it = m.find(key);
+        if (it != m.end()) 
+            l.erase(it->second);
+        l.push_front(make_pair(key, value));
+        m[key] = l.begin();
+        if (m.size() > cap) {
+            int k = l.rbegin()->first;
+            l.pop_back();
+            m.erase(k);
+        }
+    }
+    
+private:
+    int cap;
+    list<pair<int, int> > l;
+    unordered_map<int, list<pair<int, int> >::iterator> m;
+};
+/*******/
 class LRUCache {
 private:
 	struct Dlist {
@@ -100,67 +136,6 @@ public:
  * limit so that we might remove the tail node to maitain the capcaity limit*/
 /* NOTICE: BE REALLY CAREFUL WHEN DEALING WITH DOUBLE LINKED LIST NODE UPDATE!!
  */
-
-/* more easy way by using built-in list */
-class LRUCache {
-private:
-	list<pair<int, int>> dlist;
-	unordered_map<int, list<pair<int, int>>::iterator> hashmap;
-	int cap = 0;
-
-public:
-	LRUCache(int capacity) {
-		cap = capacity;
-	}
-
-	int get(int key) {
-		if (!hashmap.count(key))
-			return -1;
-		Dlist* node = hashmap[key];
-		moveToTop(node);
-		return node->value;
-	}
-
-	void put(int key, int value) {
-		if (hashmap.count(key)) {
-			Dlist* node = hashmap[key];
-			node->value = value;
-			moveToTop(node);
-
-			return;
-		}
-
-		Dlist* node = new Dlist(key, value);
-		hashmap[key] = node;
-		if (head) {
-			node->next 	= head;
-			head->pre  	= node;
-			head 		= node;
-		}
-		else {
-			head = node;
-			tail = node;
-		}
-
-		if (hashmap.size() > cap) {
-			hashmap.erase(tail->key);
-			
-			Dlist* tem = tail;
-			if (tail == head) {
-				head = NULL;
-				tail = NULL;
-			}
-			else {
-				tail = tail->pre;
-				tail->next = NULL;
-			}
-
-			delete tem;
-			tem = NULL;
-		}
-	}
-};
-
 
 
 

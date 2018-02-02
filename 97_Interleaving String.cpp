@@ -24,6 +24,3 @@ public:
         return dp[s1.length()][s2.length()];
     }
 };
-
-/* the idea:
-*/
