@@ -39,7 +39,7 @@ public:
 	}
 };
 
-/* better after using reference passing */
+/* better after using reference passing 0ms*/
 class Solution {
 public:
 	vector<string> letterCombinations(string digits) {
@@ -64,6 +64,32 @@ public:
 			findall(res, alldic, digits, index+1, candiate);
 		}
 	}
+};
+//3ms
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        if (!digits.size()) return {};
+        vector<string> dict {"","", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        vector<string> res;
+        string candidate;
+        dfshelper(digits, dict, 0, res, candidate);
+        return res;
+    }
+    
+    void dfshelper(string& str, vector<string>& dict, int start, vector<string>& res, string& cand) {
+        if (start >= str.size()) {
+            res.push_back(cand);
+            return;
+        }
+        
+        string char_dict = dict[str[start]-'0'];
+        for (char c:char_dict) {
+            cand += c;
+            dfshelper(str, dict, start+1, res, cand);
+            cand.pop_back();
+        }
+    }
 };
 
 

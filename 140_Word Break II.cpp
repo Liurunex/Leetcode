@@ -6,7 +6,6 @@ public:
     	vector<bool> hasSolution (s.length()+1, 1);
     	string curres;
         DFS(s, curres, dict, res, hasSolution, 0);
-
     	return res;
     }
 
@@ -14,10 +13,6 @@ public:
     	vector<string>& res, vector<bool>& hasSolution, int start) {
     	if (start == s.length()) {
     		res.push_back(curres.substr(0, curres.size()-1));
-            /*
-            curres.pop_back();
-    		res.push_back(curres);
-            */
     		return;
     	}
 
@@ -36,9 +31,7 @@ public:
 
                 for (int i = 0; i < combine.size()+1; ++ i)
     			    curres.pop_back();
-            }
-    		
-            
+            }  
     	}
     }
 };
