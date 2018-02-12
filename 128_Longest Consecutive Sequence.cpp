@@ -1,6 +1,28 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> dict;
+        for (int i:nums)
+            dict.insert(i);
+        int res = 0;
+        for (int i:nums) {
+            if (!dict.count(i)) continue;
+            dict.erase(i);
+            int pre = i-1, next = i+1;
+            while (dict.count(pre)) 
+                dict.erase(pre --);
+            while (dict.count(next))
+                dict.erase(next ++);
+            res = max(res, next-pre-1);
+        }
+        return res;
+    }
+};
+// hashset ways, directly look for next and pre
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
         if (nums.empty()) return 0;
         unordered_set<int> hashtable;
         int i;

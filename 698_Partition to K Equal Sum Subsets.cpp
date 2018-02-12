@@ -1,5 +1,35 @@
 class Solution {
 public:
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int target = 0;
+        for (int i:nums)
+            target += i;
+        if (target % k != 0) return false;
+        target /= k;
+        vector<int> visited (nums.size(), 0);
+        return dfsbt(nums, k, 0, target, 0, visited);
+    }
+    
+    bool dfsbt (vector<int>& nums, int k, int curSum, int& target, int start,
+               vector<int>& visited) {
+        if (k == 1) return true;
+        if (curSum > target) return false;
+        if (curSum == target) 
+            return dfsbt(nums, k-1, 0, target, 0, visited);
+        for (int i = start; i < nums.size(); ++ i) {
+            if (visited[i]) continue;
+            visited[i] = 1;
+            if (dfsbt(nums, k, curSum + nums[i], target, i+1, visited))
+                return true;
+            visited[i] = 0;
+        }
+        return false;
+    }
+};
+// more clear 
+// 
+class Solution {
+public:
 	bool canPartitionKSubsets(vector<int>& nums, int k) {
 		if (nums.size() < k) return false;
 		if (!k || k == 1 || !nums.size()) return true;

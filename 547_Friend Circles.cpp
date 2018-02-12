@@ -1,3 +1,33 @@
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        vector<int> roots (M.size(), 0);
+        for (int i = 0; i < M.size(); ++ i)
+            roots[i] = i;
+        int res = M.size();
+        for (int i = 0; i < M.size(); ++ i) {
+            for (int j = i+1; j < M.size(); ++ j) {
+                if (M[i][j]) {
+                    int root_1 = union_found(roots, i);
+                    int root_2 = union_found(roots, j);
+                    if (root_1 != root_2) {
+                        res --;
+                        roots[root_1] = root_2;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+    
+    int union_found(vector<int>& roots, int i) {
+        if (i != roots[i])
+            return union_found(roots, roots[i]);
+        return i;
+    }
+};
+// Union Found solution above
 class Solution {
 public:
 	int findCircleNum(vector<vector<int>>& M) {

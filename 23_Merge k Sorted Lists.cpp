@@ -1,11 +1,40 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.size() == 0) return NULL;
+        int right = lists.size()-1;
+        while (right > 0) {
+            int left = 0;
+            while (left < right) {
+                lists[left] = mergeTwoLists(lists[left], lists[right]);
+                left ++;
+                right --;
+            }
+        }
+        return lists[0];
+    }
+    
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode(0);
+        ListNode* res = dummy;
+        while (l1 && l2) {
+            if (l1->val > l2->val) {
+                dummy->next = l2;
+                dummy = dummy->next;
+                l2 = l2->next;
+            }
+            else {
+                dummy->next = l1;
+                dummy = dummy->next;
+                l1 = l1->next;
+            }
+        }
+        ListNode* left = l1 ? l1:l2;
+        dummy->next = left;
+        return res->next;
+    }
+};
+// divide and conquer solution above
 class Solution {
 public:
 	struct newcomparasion {

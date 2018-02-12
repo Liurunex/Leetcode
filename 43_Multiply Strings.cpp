@@ -1,3 +1,29 @@
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        vector<int> val(num1.size()+num2.size(), 0);
+        
+        for (int i = num1.size()-1; i >= 0; --i) {
+            for (int j = num2.size()-1; j >= 0; --j) {
+                int mul = (num1[i]-'0')*(num2[j]-'0');
+                int total = mul + val[i+j+1];
+                
+                val[i+j]   += total/10;
+                val[i+j+1] = total % 10;
+            }
+        }
+        string res;
+        int i = 0;
+        while (!val[i])
+            i ++;
+        for (; i < val.size(); ++ i) {
+            res += val[i] +'0';
+        }
+        return res == "" ? "0":res;
+    }
+};
+// m位乘以n位最多(m+n)位结果，对于n1[i] * n2[j] -> 高位放在 res[i+j], 低位放在 res[i+j+1]，得出单位product后，要加上carry也就是res[i+j+1]的值才是本次单位计算结果，然后update res[i+j+1] 和 res[i+j], 注意低位update
+//直接assign，高位还要加上高位本来的值！
 /* need reconsider */
 class Solution {
 public:
