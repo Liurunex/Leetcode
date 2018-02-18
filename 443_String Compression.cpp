@@ -1,4 +1,25 @@
 class Solution {
+  public:
+    int compress(vector<char> &chars) {
+        int start = 0, counter = 0;
+        for (int i = 0; i < chars.size(); i++) {
+            counter++;
+            if (i == chars.size() - 1 || chars[i] != chars[i + 1]) {
+                chars[start ++] = chars[i];
+                if (counter > 1) {
+                    string temp = to_string(counter);
+                    for (char c:temp) {
+                        chars[start ++] = c;
+                    }
+                }
+                counter = 0;
+            }
+        }
+        return start;
+    }
+};
+
+class Solution {
 public:
 	int compress(vector<char>& chars) {
 		if (chars.size() < 2) return chars.size();

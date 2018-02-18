@@ -42,6 +42,11 @@ class HitCounter {
  * position in timerecord, and then we check if the corresponding timestamp[index] == timestamp, if yes, that
  * mean multiple hits at this time, if not, we should reset it to 1 since we the previous real time at this
  * relative time position is expired from the 5-minute window!!!
+ *
+ * queue的做法，queue里面maintain 300s的window，存的<time, count>，加的时候先把front的超过timestamp-300的pop，然后加入当前时间点的，
+ * 可能回重复hit在一个时间点；get hit时候同样把超过timestamp-300的pop，全局维护一个count
+ * 
+ * 
  */
 
 class HitCounter {  

@@ -5,7 +5,6 @@ public:
 		vector<pair<int, int>> directions {{1,0}, {-1,0}, {0,1}, {0,-1}};
 		vector<vector<int>> dist (maze.size(), vector<int>(maze[0].size(), INT_MAX));
 
-		int res = INT_MAX;
 		go_visit.push({start[0], start[1]});
 		dist[start[0]][start[1]] = 0;
 		
