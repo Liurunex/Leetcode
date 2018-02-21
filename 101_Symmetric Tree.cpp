@@ -1,14 +1,5 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 
-/* Recursive Solution: 
+/* Recursive Solution: */
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
@@ -26,10 +17,33 @@ public:
     	return false;
     }
 };
-*/
+
 /* Iterator Solution: */
+
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
+        if (!root) return true;
+        queue<TreeNode*> visit;
+        visit.push(root->left);
+        visit.push(root->right);
+        
+        while (visit.size()) {
+            TreeNode* p = visit.front();
+            visit.pop();
+            TreeNode* q = visit.front();
+            visit.pop();
+            
+            if (!p && !q) continue;
+            if (!p || !q) return false;
+            if (p->val != q->val) return false;
+            
+            visit.push(p->left);
+            visit.push(q->right);
+            
+            visit.push(p->right);
+            visit.push(q->left);
+        }
+        return true;
     }
 };

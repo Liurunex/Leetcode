@@ -37,3 +37,21 @@ public:
 		return res;
     }
 };
+// recursion solution
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        helper(root, res, 0);
+        return res;
+    }
+    
+    void helper(TreeNode* node, vector<vector<int>>& res, int level) {
+        if (!node) return;
+        if (res.size() == level)
+            res.push_back({});
+        res[level].push_back(node->val);
+        helper(node->left, res, level+1);
+        helper(node->right, res, level+1);
+    }
+};

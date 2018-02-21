@@ -37,3 +37,32 @@ public:
  *    	这是一个recursive的思想：依然看以上三个case,（case 2 and case 3 can be mergered）
  * NOTICE the initial case dp[0][0] = 1;
  * */
+ 
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        vector<vector<bool>> dp (s.size()+1, vector<bool> (p.size()+1, false));
+        dp[0][0] = 1;
+
+        for (int i = 0; i <= s.size(); ++ i) {
+            for (int j = 1; j <= p.size(); ++ j) {
+                switch (p[j-1]) {
+                    case '*':
+                        if (j < 2) break; 
+                        dp[i][j] = dp[i][j-2]; //match 0 p[j-2]
+                        if (!dp[i][j])
+                            dp[i][j] = dp[i][j-1]; //match 1 p[j-2]
+                        if (!dp[i][j])
+                            dp[i][j] = i>0 && (p[j-2] == '.' || s[i-1] == p[j-2]) && dp[i-1][j];
+                        break;
+                    case '.': 
+                        dp[i][j] = i>0 && dp[i-1][j-1];
+                        break;
+                    default:
+                        dp[i][j] = i>0 && s[i-1] == p[j-1] && dp[i-1][j-1];
+                }
+            }
+        }
+        return dp.back().back();
+    }
+};
