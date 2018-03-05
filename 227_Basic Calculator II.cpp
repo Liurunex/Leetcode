@@ -1,14 +1,32 @@
+// stack 保存全部只有+/-操作的数
 class Solution {
 public:
-	int integerReplacement(int n) {
-		if (n == 1) return 0;
-		if (!(n&1)) return 1 + integerReplacement(n>>1);
-		else {
-			return 2+min(integerReplacement(((long long)n+1)/2), integerReplacement((n-1)/2));
-		}
-	}
+    int calculate(string s) {
+        stack<int> vals;
+        char symbol = '+';
+        
+        for (int i = 0; i < s.size(); ++ i) {
+            if (s[i] == ' ') continue;
+            if (s[i] >= '0' && s[i] <= '9') {
+                int num = s[i++]-'0';
+                while (i < s.size() && s[i] >= '0' && s[i] <= '9')
+                    num = num*10 + s[i ++]-'0';
+                i --;
+                switch (symbol) {
+                    case '+': vals.push(num); break;
+                    case '-': vals.push(-1*num); break;
+                    case '*': vals.top() *= num; break;
+                    case '/': vals.top() /= num; break;
+                }
+            }
+            else symbol = s[i];
+        }
+        
+        int res = 0;
+        while (vals.size()) {
+            res += vals.top();
+            vals.pop();
+        }
+        return res;
+    }
 };
-
-/* the idea: brute force recursion: if even we recursive call n>>1, if odd, return the
- * min value from case (n+1)/2 and (n-1)/2
- */

@@ -28,7 +28,7 @@ public:
  * previous k-window, our job here is to find the first element in dequeu that is greater
  * or equal to current value, then we drop all those small values in dequeu, SINCE they 
  * can never be candiate of maxmium value of later k-window!! Then we push current value 
- * inside deque (it either be max of min!), we then push the head of deque into result once
+ * inside deque (it either be max or min!), we then push the head of deque into result once
  * the iterating index is larger than k-2, SINCE we start at empty dequeu! ONE MORE THING:
  * we should check at first if the current maximum value is out of k-size window [i-k+1, i],
  * if ourside, we should pop that head out, but this operation will be at most once, SINCE

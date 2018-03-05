@@ -1,3 +1,42 @@
+class Solution {
+public:
+    int calculate(string s) {
+        char symbol = '+';
+        int local = 0;
+        stack<pair<int, char>> vals;
+        
+        for (int i = 0; i < s.size(); ++ i) {
+            if (s[i] == ' ') continue;
+            if (s[i] >= '0' && s[i] <= '9') {
+                int num = s[i ++]-'0';
+                while (i < s.size() && s[i] >= '0' && s[i] <= '9')
+                    num = num*10 + s[i ++]-'0';
+                i --;
+                switch (symbol) {
+                    case '+': local += num; break;
+                    case '-': local -= num; break;
+                }  
+            }
+            else if (s[i] == '(') {
+                vals.push({local, symbol}); //必须有符号信息，不然pop出来做运算的符号已变
+                local = 0;
+                symbol = '+'; // 符号也要重置
+            }
+            else if (s[i] == ')') {
+                auto pre = vals.top();
+                vals.pop();
+                switch (pre.second) {
+                    case '+': local += pre.first; break;
+                    case '-': local = pre.first - local; break; // 出来时被减数
+                }
+            }
+            else symbol = s[i];
+        }
+        return local;
+    }
+};
+
+
 /*basic calculator*/
 class Solution {
 public:
